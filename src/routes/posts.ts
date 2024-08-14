@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 
-const router = express.Router();
-const app = express();
+export const router = express.Router();
+
 interface Post {
   id: number;
   title: string;
@@ -14,7 +14,7 @@ let posts: Post[] = [
 ];
 
 // Get all post
-app.get("/api/posts", (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response) => {
   // deal with query string
   const limit: number = parseInt(req.query.limit as string) || 0;
 
@@ -25,7 +25,7 @@ app.get("/api/posts", (req: Request, res: Response) => {
 });
 
 // Get a single post
-app.get("/api/posts/:id", (req: Request, res: Response) => {
+router.get("/:id", (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const post = posts.find((post) => post.id === id);
 
@@ -36,3 +36,5 @@ app.get("/api/posts/:id", (req: Request, res: Response) => {
   }
   res.status(200).json(post);
 });
+
+export default router;
